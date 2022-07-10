@@ -1,0 +1,94 @@
+﻿<UserControl x:Class="Serial_Numbers_Distributor.Views.HeaderView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Serial_Numbers_Distributor.Views"
+             xmlns:vm="clr-namespace:Serial_Numbers_Distributor.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <vm:HeaderViewModel/>
+    </UserControl.DataContext>
+    <UserControl.Resources>
+        <Style TargetType="TextBox">
+            <Style.Setters>
+                <Setter Property="Opacity" Value="1"/>
+            </Style.Setters>
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Opacity" Value="1"/>
+                </Trigger>
+                <Trigger Property="Text" Value="">
+                    <Setter Property="Opacity" Value="0.2"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Grid> 
+        <StackPanel Orientation="Vertical">
+            <TextBlock 
+                x:Name="LogoTB"
+                Text="Distribute 'em all" 
+                FontSize="25" 
+                FontWeight="Bold"
+                FontStyle="Italic" 
+                Margin="290 0 0 0"/>
+            
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Label 
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Content="Текущий загруженный файл: " 
+                    FontSize="15"/>
+
+                <Button x:Name="UploadNewFileBtn"
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Command="{Binding UploadNewFileCmd}"
+                        Content="Загрузить новый файл"
+                        Width="150"
+                        Foreground="Black"/>
+                <Label 
+                    x:Name="CurrentFilesName" 
+                    Grid.Row="0" 
+                    Grid.Column="1" 
+                    Content="{Binding Path=CurrentFileName}"
+                    FontSize="15" 
+                    FontWeight="Bold"/>
+
+                <Label Grid.Row="0" Grid.Column="2" Content="Укажите размер адресного пространства"/>
+
+                <Grid Grid.Row="1" Grid.Column="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <ComboBox
+                        Grid.Column="0"
+                        Width="100"
+                        ItemsSource="{Binding ComboboxNValues}"
+                        SelectedIndex="0"
+                        SelectedItem="{Binding Distributor.N}"
+                        Cursor="Hand">
+                    </ComboBox>
+
+                    <Label Grid.Column="1" Content="Своё число" Margin="25 0 0 0" Foreground="Gray"/>
+                    <TextBox Grid.Column="1" Width="100" Text="{Binding InputNValue}"/>
+                </Grid>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</UserControl>
